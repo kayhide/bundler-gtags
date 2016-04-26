@@ -1,3 +1,5 @@
 #!/usr/bin/env ruby
 
-require "bundler/gtags"
+require "bundler-gtags"
+
+Bundler::Gtags::CLI.start(ARGV, debug: true)
