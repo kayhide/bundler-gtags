@@ -1,8 +1,10 @@
 # Bundler::Gtags
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/bundler/gtags`. To experiment with that code, run `bin/console` for an interactive prompt.
+GNU Global (gtags) utility.
 
-TODO: Delete this and the text above, and describe your gem
+`bundler-gtags` command creates gtags for all bundled gems.
+And also manages direnv settings exporting GTAGSLIBPATH so that editors can tag-jump
+directly to any gems source code from the bundler application.
 
 ## Installation
 
@@ -22,7 +24,66 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+To use tag-jump functionality to the utmost extent,
+3 things are needed before go to your project.
+
+**First**, [GNU Global](https://www.gnu.org/software/global/) is required.
+
+Pymgments option is recommended.
+
+On OSX:
+
+    $ install global --with-ctags --with-pygments
+
+**Next**, `direnv` command is required.
+
+Go and follow the install instruction of
+[direnv](https://github.com/direnv/direnv).
+
+**And lastly**, your editor would need some setting.
+
+On Emacs, `projectile-direnv` package works nicely.
+
+```lisp
+(use-package projectile-direnv
+  :commands (projectile-direnv-export-variables)
+  :init
+  (add-hook 'projectile-mode-hook 'projectile-direnv-export-variables)
+  )
+```
+
+
+Now, you are ready to generate gtags for your project's gems.
+
+Go to your project root dir (there must be a Gemfile), and hit:
+
+    $ bundler-gtags
+
+After some time, GTAGS files are created at the every gem root dir.
+
+And also `.envrc` file, which is direnv settings file, is to be at your project root dir.
+
+If you are already using direnv and having `.envrc` file,
+`bundler-gtags` command will just append a line to the end of the existing one.
+
+Note that `.envrc` should be excluded from git management, because it includes some system specific settings.
+Putting it into the user-local `.gitignore` might be a good idea.
+To do so:
+
+    $ git config --global core.excludesfile ~/.gitignore
+    $ echo .envrc >> ~/.gitignore
+
+
+Thats it.
+Finally, you are ready to jump around the codes of gems.
+Enjoy code reading :)
+
+## Thanks
+
+Original idea came from here.
+[Emacs での Rails 開発を GNU GLOBAL でだいぶ快適にする](http://qiita.com/5t111111/items/5e854f6047d187ea21c7)
+
+Thanks for @5t111111
 
 ## Development
 
@@ -32,7 +93,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/bundler-gtags. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/kayhide/bundler-gtags. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 
 ## License

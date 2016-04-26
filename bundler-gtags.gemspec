@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['kayhide@gmail.com']
 
   spec.summary       = 'GNU Global (gtags) utility.'
-  spec.description   = 'GNU Global (gtags) utility. Create gtags for all bundled gems and manage GTAGSLIBPATH using direnv.'
+  spec.description   = 'GNU Global (gtags) utility. Create gtags for all bundled gems and manage direnv settings exporting GTAGSLIBPATH.'
   spec.homepage      = 'https://github.com/kayhide/bundler-gtags'
   spec.license       = 'MIT'
 
